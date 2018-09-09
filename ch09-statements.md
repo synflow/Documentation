@@ -1,109 +1,106 @@
-<p>This section specifies the semantics of statements in Cx.</p>
+This section specifies the semantics of statements in Cx.
 
-<h2><a class="anchor" id="assert"></a>Assert</h2>
+## Assert
 
-<p>Asserts that an expression is true. Useful for verification.</p>
+Asserts that an expression is true. Useful for verification.
 
-<h2><a class="anchor" id="assignment"></a>Assignment</h2>
+## Assignment
 
-<p>Assign an expression to a variable or an array.</p>
+Assign an expression to a variable or an array.
 
-<pre><code class="cx">x = 15;
-y[3] = (u4) z;</code></pre>
+    x = 15;
+    y[3] = (u4) z;
 
-<p>The assignment statement may be used without a target variable just to force the evaluation of an expression. This is useful to wait for an event by reading from a <code class="cx">sync</code> port, but without using the actual data. In this case, you can use an empty assignment statement as follows:</p>
+The assignment statement may be used without a target variable just to force the evaluation of an expression. This is useful to wait for an event by reading from a `sync` port, but without using the actual data. In this case, you can use an empty assignment statement as follows:
 
-<pre><code class="cx">in sync u8 msg;
-void loop() {
-  // ...
-  // wait for data to be available on msg, and discard it
-  msg.read();
-  // ...
-}
-</code></pre>
+    in sync u8 msg;
+    void loop() {
+      // ...
+      // wait for data to be available on msg, and discard it
+      msg.read();
+      // ...
+    }
 
-<h2><a class="anchor" id="fence"></a>Fence</h2>
+## Fence
 
-<p>Placed between statements, forces a new cycle to start.</p>
+Placed between statements, forces a new cycle to start.
 
-<pre><code class="cx">print("in cycle 1");
-fence;
-print("in cycle 2");</code></pre>
+    print("in cycle 1");
+    fence;
+    print("in cycle 2");
 
-<h2><a class="anchor" id="idle"></a>Idle</h2>
+## Idle
 
-<p>Do nothing for a given number of cycles.</p>
+Do nothing for a given number of cycles.
 
-<pre><code class="cx">print("in cycle 1");
-idle(3);
-print("in cycle 5");</code></pre>
+    print("in cycle 1");
+    idle(3);
+    print("in cycle 5");
 
-<h2><a class="anchor" id="print"></a>Print</h2>
+## Print
 
-<p>Prints a message/values. Useful for verification.</p>
+Prints a message/values. Useful for verification.
 
-<pre><code class="cx">print("something");</code></pre>
+    print("something");
 
-<h2><a class="anchor" id="return"></a>Return</h2>
+## Return
 
-<p>Returns a value. In the current version, only valid at the end of a constant function.</p>
+Returns a value. In the current version, only valid at the end of a constant function.
 
-<pre><code class="cx">return factor << 1;</code></pre>
+    return factor << 1;
 
-<h2><a class="anchor" id="write"></a>Write</h2>
+## Write
 
-<p>Write to a port.</p>
+Write to a port.
 
-<pre><code class="cx">answer.write(42);</code></pre>
+    answer.write(42);
 
-<h2><a class="anchor" id="if"></a>If</h2>
+## If
 
-<p>Conditional "if" statement.</p>
+Conditional "if" statement.
 
-<pre><code class="cx">if (a &gt; 0) {
-  print("a greater than zero");
-} else if (a &lt; 0) {
-  print("a smaller than zero");
-} else {
-  print("a equals zero");
-}</code></pre>
+    if (a > 0) {
+      print("a greater than zero");
+    } else if (a < 0) {
+      print("a smaller than zero");
+    } else {
+      print("a equals zero");
+    }
 
-<p>Both if and for statements have special semantics of reads in conditional called peeking. This means that you may read the data on a port in the condition of the if/loop and still have access to that data in the branch that is chosen:</p>
+Both if and for statements have special semantics of reads in conditional called peeking. This means that you may read the data on a port in the condition of the if/loop and still have access to that data in the branch that is chosen:
 
-<pre><code class="cx">if (a.read() &lt; b.read()) { // peeks a and b
-  min.write(a.read()); // does not cause a new cycle, 
-}
-// we're still in the same cycle
-// after the if, both a and b have been read (b implicitly in this case)
+    if (a.read() < b.read()) { // peeks a and b
+      min.write(a.read()); // does not cause a new cycle,
+    }
+    // we're still in the same cycle
+    // after the if, both a and b have been read (b implicitly in this case)
 
-b.read(); // causes the creation of a new cycle
-</code></pre>
+    b.read(); // causes the creation of a new cycle
 
-<h2><a class="anchor" id="for"></a>For</h2>
+## For
 
-<p>For loop with initial assignment, loop condition, post-iteration assignment.</p>
+For loop with initial assignment, loop condition, post-iteration assignment.
 
-<pre><code class="cx">for (u4 i = 0; i &lt; 5; i++) {
-  print("one iteration"); // this message is printed 5 times in the current cycle
-}
+    for (u4 i = 0; i < 5; i++) {
+      print("one iteration"); // this message is printed 5 times in the current cycle
+    }
 
-for (; cond.read(); count++) {
-  print("cond is true"); // this message is printed one time per cycle until cond becomes false
-}</code></pre>
+    for (; cond.read(); count++) {
+      print("cond is true"); // this message is printed one time per cycle until cond becomes false
+    }
 
-<p>A <code class="cx">for</code> loop can be executed in the current cycle if the following conditions are respected:</p>
-<ul>
-  <li>The loop uses a local variable used solely for iteration.</li>
-  <li>The loop has compile-time constant bounds.</li>
-  <li>The body does not read or write ports, or contains fence or idle instructions.</li>
-</ul>
+A `for` loop can be executed in the current cycle if the following conditions are respected:
 
-<p>Otherwise, the loop takes at least one cycle per iteration.</p>
+- The loop uses a local variable used solely for iteration.
+- The loop has compile-time constant bounds.
+- The body does not read or write ports, or contains fence or idle instructions.
 
-<h2><a class="anchor" id="while"></a>While</h2>
+Otherwise, the loop takes at least one cycle per iteration.
 
-<p>While loop with loop condition.</p>
+## While
 
-<pre><code class="cx">while (keepGoing.read()) {
-  count++;
-}</code></pre>
+While loop with loop condition.
+
+    while (keepGoing.read()) {
+      count++;
+    }
