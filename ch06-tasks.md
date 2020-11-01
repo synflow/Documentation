@@ -138,3 +138,21 @@ For instance, in the following example, a first cycle is necessary to set the va
 ## Synchronization with ports
 
 When a task declares [synchronized ports](/documentation/declarations#ports), it changes the semantics of accesses to ports in the following way. A `read` to a synchronized port that has no data will block. It is possible to test if data is available on a `sync` port using the `available` property.
+
+
+---
+```
+Copyright 2014-2020 Synflow SAS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

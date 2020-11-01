@@ -27,25 +27,25 @@ Cx programs are structured as a set of entities connected together and executed 
 A task is a sequential process that may declare two special functions `setup` and `loop` (like Arduino). The `setup` function, if defined, is called *once* when the task starts (after reset of the chip on which the task executes). Then the `loop` function is called and as its name suggests, it loops endlessly: once the function completes, it starts again. A task may define any number of functions that can be called from `setup` and `loop`.
 
     task MinimalTask {
-    
+
       void setup() {
         // (optional) setup code that runs once after reset
       }
-    
+
       void loop() {
         // main code that executes repeatedly
       }
-    
+
     }
 
 A task can declare state variables: a state variable may have an initial value (otherwise it is initialized to zero) and is used to store values during the execution of the task. State variables are *private*: no other entity than the task declaring a state variable can access it. Tasks communicate together though *ports*, reading data from ports and writing data to ports. The following task is a timer that fires every 10,000 invocations, writing `true` to the boolean output port `done`.
 
     task Timer {
       out bool done;
-    
+
       const uint BOUND = 10_000;
       unsigned int count;
-    
+
       void loop() {
         if (count == BOUND - 1) {
           count = 0;
@@ -55,7 +55,7 @@ A task can declare state variables: a state variable may have an initial value (
           done.write(false);
         }
       }
-    
+
     }
 
 ### Networks
@@ -64,15 +64,15 @@ A network is an entity that may have properties, input and output ports, and tha
 
     network HelloWorld {
       out u8 seg;
-    
+
       wordToDisplay = new WordToDisplay();
-    
+
       driverSegment = new DriverSegment();
       driverSegment.reads(wordToDisplay.character);
-    
+
       this.reads(driverSegment.seg);
     }
-    
+
 
 A network can instantiate as many lower-level tasks and networks as required. The network window offers a view of the current network.
 
@@ -98,3 +98,21 @@ As stated above, **an execution rule is non-interruptible** so how can reads or 
 Each Cx task is mapped to an independent hardware entity/module. Entities are specialized using the values they are given when instantiated. The compiler handles the transformation from the sequential Cx code to a finite state machine in hardware. To this end, the compiler walks through the code, inlines function calls, splits sequential code by creating a new execution rule when implicit breaks occur (such as reading twice from the same port), flattens control flow (for instance conditionals containing loop statements), creates parallel execution rules for non breaking if statements, etc.
 
 An execution rule corresponds exactly to one hardware cycle, which is pretty convenient because hardware operates in a *cycle-accurate* manner. This mapping maximizes productivity and performance, since it makes it possible to know in advance how a piece of Cx code will be scheduled in hardware. That said, in a future version of the language, we'd like to support properties to give the compiler more leeway to schedule operations differently when it would be beneficial.
+
+
+---
+```
+Copyright 2014-2020 Synflow SAS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

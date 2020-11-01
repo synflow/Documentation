@@ -22,11 +22,11 @@ Cx entities (and the constants, types, and functions they define) can be importe
 Entities are defined in modules, and there is one module per .cx file. A module begins with a package declaration, may have module-level import directives, and then may declare any number of entities.
 
     package com.synflow.sha256;
-    
+
     // module-level import directives
     import com.synflow.sha256.SHAConstants;
     import com.synflow.sha256.LookupTable;
-    
+
     /**
      *  documentation for network
      */
@@ -34,17 +34,17 @@ Entities are defined in modules, and there is one module per .cx file. A module 
       // entity-level import directives
       import com.synflow.sha256.SHALoop;
       import std.lib.SinglePortRAM;
-    
+
       // description of network
     }
-    
+
     /**
      *  documentation for task 1
      */
     task T1 {
       // code for task 1
     }
-    
+
     /**
      *  documentation for task 2
      */
@@ -112,11 +112,11 @@ The language's integer types support at least 2-bit integers. The first reason i
 Custom-width integer types are types that accept a compile-time constant expression that defines their size. All "int" variants can be given a size, in other words any type from the following set: `{signed, int, signed int, unsigned, uint, unsigned int}`. The syntax is shown in the example below.
 
     const int words = 1;
-    
+
     signed<words * 32> a;
     int<words * 32> b;
     signed int<words * 32> c;
-    
+
     unsigned<words * 32> x;
     uint<words * 32> y;
     unsigned int<words * 32> z;
@@ -173,7 +173,7 @@ A task may have an `setup` function that is executed once, and is used generally
       void setup() {
         print("first time");
       }
-    
+
       void loop() {
         print("all the time");
       }
@@ -197,7 +197,7 @@ A task is defined in a cycle-accurate way, i.e. a task executes cycle by cycle. 
           b: [5, 8, 13, 21]
         }
       }
-    
+
       in i6 a, b;
       void loop() {
         i6 x = a.read;
@@ -237,7 +237,7 @@ For instance, assuming a network N with two inner [tasks](/documentation/structu
           i++;
         }
       };
-    
+
       t2 = new task {
         int i;
         void loop() {
@@ -278,7 +278,7 @@ Let's see how this works with an instance of counter, and an inner task reading 
           counter.write(count); // writes count
         }
       };
-    
+
       t2 = new task {
         void loop() {
           print("count = ", t1.counter.read);
@@ -309,3 +309,21 @@ The output of running this example is this (comments starting with -- added for 
 ### Combinational modeling
 
 It is sometimes useful to declare tasks or networks that are executed in a combinational. A combinational entity executes in an "instantaneous" manner, during the same cycle.
+
+
+---
+```
+Copyright 2014-2020 Synflow SAS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

@@ -78,3 +78,21 @@ A `sync ready` port allows two tasks (producer and consumer) to communicate toge
 - interact with the outside world for compatibility with existing components.
 
 Note: ready ports are experimental, we're still figuring out some implementation details in code generation. See [this post](https://forum.synflow.com/t/thoughts-on-ready-ports-for-implementing-an-intel-8088/219) for discussion.
+
+
+---
+```
+Copyright 2014-2020 Synflow SAS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

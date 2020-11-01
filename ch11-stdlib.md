@@ -171,3 +171,21 @@ Definition of the ports:
 - `q`: output port that contains the value read at the address given by the `rd_address` port at the previous cycle. Relative to `rd_clock`.
 
 Usage is quite similar to [SinglePortRAM](instantiation/stdlib/#std.mem.SinglePortRAM), except that reads and writes can occur simultaneously and may be freely interleaved.
+
+
+---
+```
+Copyright 2014-2020 Synflow SAS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

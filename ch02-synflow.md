@@ -138,7 +138,7 @@ The Synflow IDE automatically skip unused resources from your project. For examp
 ### Managing Dependencies
 
 Dependencies for your project are specified by name in the `Project Reference` window. The compiler takes care of finding your dependencies and making them available in your build. To add a depency to your project, selecte your projet and press ALT+Enter or right click on your project and select Properties. In project properties, select your dependency(ies).
-  
+
 ![Selecting properties for a project.](/images/synflow/selectProperties.png "Selecting properties for a project.")
 
 ![Adding the dependency(ies).](/images/synflow/projectDependencies.png "Adding the dependency(ies).")
@@ -155,7 +155,7 @@ To Run a simulation, right click on a network and select **Run as > Simulation**
 
 ![Running a simulation.](/images/synflow/simulation.png "Running a simulation.")
 
-To stop a simulation, in the **tool window** bar, click the square red button. 
+To stop a simulation, in the **tool window** bar, click the square red button.
 
 For more information about the Synflow simulator, see [Android Monitor](https://developer.android.com/tools/help/android-monitor.html).
 
@@ -164,7 +164,7 @@ For more information about the Synflow simulator, see [Android Monitor](https://
 The code checker is always active. When you save your file after editing the code, it will control your code. If an error is detected, you can modify your code yourself or use **Quick Fix**.
 
 ![An error detected on the code.](/images/synflow/errorCatcher.png "An error detected on the code.")
-  
+
 For more informatin about the code checker, see [Dumping and Analyzing the Java Heap](https://developer.android.com/tools/help/am-memory.html#dumping).
 
 ### Third party Simulator
@@ -183,18 +183,18 @@ Synflow IDE supports annotations for Finite State Machine to help you understand
 
     rxTask = new task {
       out bool start;
-    
+
       u8 data = 0;
-      u4 i; 
+      u4 i;
       u6 j;
-    
+
       void loop() {
-        detectStart: rxFilter.startRx.read; // Detect the start bit 
-        
-        waitData: for (j = 0; j != OVERSAMPLING + OVERSAMPLING / 2; j++) { // Wait for the data 
+        detectStart: rxFilter.startRx.read; // Detect the start bit
+
+        waitData: for (j = 0; j != OVERSAMPLING + OVERSAMPLING / 2; j++) { // Wait for the data
           prescaler.tick.read;
         }
-    
+
         saveData: for (i = 0; i != 8; i++) { // read data (LSB)
           data >>= 1;
           data[7] = rxFilter.filteredRx.read();
@@ -202,7 +202,7 @@ Synflow IDE supports annotations for Finite State Machine to help you understand
             prescaler.tick.read;
           }
         }
-    
+
         if (rxFilter.filteredRx.read()) {
           dout.write(data);
           print("UART Rx data: ", data);
@@ -217,5 +217,23 @@ You will see the name of your sates in the FSM view and while running a simulati
 ### Log messages
 
 When you build and run your project with the Synflow IDE, you can view the output and log messages by clicking **Console** in the **tool window** bar. You can also view errors and warning on all your opened projects.
-  
+
 ![Errors and Warnings.](/images/synflow/errrorsWarnings.png "Errors and Warnings.")
+
+
+---
+```
+Copyright 2014-2020 Synflow SAS
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
