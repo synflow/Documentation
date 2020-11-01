@@ -23,5 +23,5 @@ Proper attribution is required when you reuse or create modified versions of con
 
  In practice we ask that you provide attribution to the Synflow Open Source project to the best of the ability of the medium in which you are producing the work. There are several typical ways in which this might apply. For example, if your online work reproduces text or images from this site, in whole or in part, please include a paragraph at the bottom of your page that reads:
 ```
-Portions of this page are reproduced from work created and shared by the Synflow Open Source Project and used according to terms described in the Creative Commons Attribution License</a>.
+Portions of this page are reproduced from work created and shared by the Synflow Open Source Project and used according to terms described in the Creative Commons Attribution License.
 ```
